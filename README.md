@@ -27,3 +27,9 @@ CRON JOBS<br>
 onceinfourweek<br>
 2)Will run every friday notifying patients about survey<br>
 everyfriday<br>
+
+<h1>Errors</h1>
+1)Unhandled rejection SequelizeConnectionError: Client does not support authentication protocol requested by server; consider upgrading MySQL client sequelize
+Run mysql
+solution:<h3>use mysql
+alter user 'root'@'localhost' identified with mysql_native_password by 'password' </h3>
