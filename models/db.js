@@ -1,17 +1,33 @@
+var mysql = require('mysql');
+
+var con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "password"
+});
+
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+  con.query("CREATE DATABASE patient", function (err, result) {
+    if (err) throw err;
+    console.log("Database created");
+  });
+});
 const Sequelize=require('sequelize');
 const db=new Sequelize('patient','root','password',{
     dialect:'mysql',
     host:'localhost',
     port:3306,
     freezeTableName: true,
-    operatorsAliases: false,   
+    operatorsAliases: false,
 })
 
 var patient=db.define('patients',{
     pat_id:{
             type:Sequelize.INTEGER,
             primaryKey:true,
-            autoIncrement:true,   
+            autoIncrement:true,
         },
         pat_date:{
             type: Sequelize.DATE
@@ -42,7 +58,7 @@ var response=db.define('response',{
             allowNull:false
     },
     pat_id:{
-            type:Sequelize.INTEGER   
+            type:Sequelize.INTEGER
     },
     res_date:{
         type: Sequelize.DATE
