@@ -48,15 +48,15 @@ app.get('/create/response/:id/:date/:details',(req,res)=>{
             //   subject:'Response from Patient',
             //   html
             // };
-            
+
             // transporter.sendMail(mailOptions, function(error, info){
             //   if (error) {
             //     console.log(error);
             //   } else {
             //     console.log('Email sent: ');
             //   }
-            // }); 
-          
+            // });
+
     })
     patients.update({
         res_status:1
@@ -73,12 +73,12 @@ app.get('/res',(req,res)=>{
     var da=new Date();
     da.setUTCHours(0,0,0,0);
     console.log(da);
-  patients.findAll({ 
+  patients.findAll({
       where:{
         rem_date:{[op.gt]:da},
         rem_date_start:{[op.lt]:da},
         res_status:0
-        }   
+        }
   }).then((resp)=>{
     html=`${resp}`
     // var transporter = nodemailer.createTransport({
@@ -94,14 +94,14 @@ app.get('/res',(req,res)=>{
           //   subject:'Response from Patient',
           //   html
           // };
-          
+
           // transporter.sendMail(mailOptions, function(error, info){
           //   if (error) {
           //     console.log(error);
           //   } else {
           //     console.log('Email sent: ');
           //   }
-          // }); 
+          // });
       res.send(resp)
   })
 })
@@ -119,17 +119,22 @@ app.get('/surveystatus',(req,res)=>{
         res.send(resp)
     })
 })
+app.get('/all',(req,res)=>{
+  patients.findAll({}).then((resp)=>{
+    res.send(resp);
+  })
+})
 //Will run automatically once in four weeks giving status of patients who did not submit the survey
 var onceinfourweek = schedule.scheduleJob('* 0 0 ? * * *', function(){
     var da=new Date();
     da.setUTCHours(0,0,0,0);
     console.log(da);
-  patients.findAll({ 
+  patients.findAll({
       where:{
         rem_date:{[op.gt]:da},
         rem_date_start:{[op.lt]:da},
         res_status:0
-        }   
+        }
   }).then((resp)=>{
       html=`${resp}`
       // var transporter = nodemailer.createTransport({
@@ -145,14 +150,14 @@ var onceinfourweek = schedule.scheduleJob('* 0 0 ? * * *', function(){
             //   subject:'Response from Patient',
             //   html
             // };
-            
+
             // transporter.sendMail(mailOptions, function(error, info){
             //   if (error) {
             //     console.log(error);
             //   } else {
             //     console.log('Email sent: ');
             //   }
-            // }); 
+            // });
   })
 });
 onceinfourweek;
@@ -182,17 +187,17 @@ var everyfriday = schedule.scheduleJob('* 0 0 ? * FRI *', function(){
             //   subject:'Response from Doctor',
             //   html
             // };
-            
+
             // transporter.sendMail(mailOptions, function(error, info){
             //   if (error) {
             //     console.log(error);
             //   } else {
             //     console.log('Email sent: ');
             //   }
-            // }); 
+            // });
             }
         }
-    }) 
+    })
 });
 everyfriday;
 const PORT=process.env.PORT||1111;
